@@ -1,11 +1,7 @@
 (ns reitit.re-frame
   (:require [re-frame.core :as re :refer [dispatch]]
             [reitit.frontend :as reitit-frontend]
-            [reitit.core :as reitit]
-            [clojure.string :as str]
-            [clojure.set :refer [rename-keys]]
-            goog.Uri
-            [reitit.coercion :as coercion]))
+            [reitit.core :as reitit]))
 
 (re/reg-event-db ::hash-change
   (fn [db _]

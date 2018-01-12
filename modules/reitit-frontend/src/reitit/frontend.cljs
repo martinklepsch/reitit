@@ -1,7 +1,6 @@
 (ns reitit.frontend
   (:require [reitit.core :as reitit]
             [clojure.string :as str]
-            [clojure.set :refer [rename-keys]]
             goog.Uri
             [reitit.coercion :as coercion]))
 
