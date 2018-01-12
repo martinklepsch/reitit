@@ -22,6 +22,8 @@
 
 (re/reg-event-fx :routes/init
   (fn [{:keys [db]} [_ routes]]
+    ;; TODO: This is tied to onhashchange
+    ;; What is user wants to use HTML5 History?
     (set! js/window.onhashchange #(dispatch [::hash-change]))
     {:db (assoc db ::routes {:routes routes
                              :match nil
@@ -56,7 +58,10 @@
       ::not-initialized)))
 
 (defn routed-view
-  [views]
+  "Renders the current view component.
+
+  Current view component is the :view from last :controllers entry with :view set."
+  []
   (let [view @(re/subscribe [:routes/match])
         ;; Select downmost controller that has view component
         controller (first (filter :view (reverse (:controllers (:data view)))))]
@@ -82,11 +87,13 @@
         (js/console.error "Can't create URL for route " (pr-str name) (pr-str params))))))
 
 (defn href
+  "Returns href (including #) for given route name and parameters."
   ([name] (href name nil))
   ([name params]
    @(re/subscribe [:routes/href name params])))
 
 (defn update-uri!
+  "Creates hash using given name and parameters and changes to browser hash."
   ([name]
    (update-uri! name nil))
   ([name params]

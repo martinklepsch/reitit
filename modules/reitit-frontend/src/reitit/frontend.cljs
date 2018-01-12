@@ -1,4 +1,8 @@
 (ns reitit.frontend
+  "Utilities to implement frontend routing using Reitit.
+
+  Controller is way to declare as data the side-effects and optionally
+  other data related to the route."
   (:require [reitit.core :as reitit]
             [clojure.string :as str]
             goog.Uri
@@ -8,20 +12,22 @@
 ;; Utilities
 ;;
 
-(defn query-params [^goog.Uri uri]
+(defn query-params
+  "Parse query-params from URL into a map."
+  [^goog.Uri uri]
   (let [q (.getQueryData uri)]
     (->> q
          (.getKeys)
          (map (juxt keyword #(.get q %)))
          (into {}))))
 
-(defn get-hash []
+(defn get-hash
+  "Given browser hash starting with #, remove the # and
+  end slashes."
+  []
   (-> js/location.hash
       (subs 1)
       (str/replace #"/$" "")))
-
-(defn- pad-same-length [a b]
-  (concat a (take (- (count b) (count a)) (repeat nil))))
 
 ;;
 ;; Controller implementation
@@ -40,6 +46,9 @@
   [controller method]
   (when-let [f (get controller method)]
     (f (::params controller))))
+
+(defn- pad-same-length [a b]
+  (concat a (take (- (count b) (count a)) (repeat nil))))
 
 (defn apply-controllers
   "Applies changes between current controllers and
