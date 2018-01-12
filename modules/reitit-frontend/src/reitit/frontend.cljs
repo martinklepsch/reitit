@@ -72,9 +72,9 @@
       (apply-controller controller :start))
     new-controllers))
 
-(defn hash-change [routes hash]
+(defn hash-change [router hash]
   (let [uri (goog.Uri/parse hash)
-        match (or (reitit/match-by-path routes (.getPath uri))
+        match (or (reitit/match-by-path router (.getPath uri))
                   {:data {:name :not-found}})
         q (query-params uri)
         ;; Coerce if coercion enabled

@@ -5,7 +5,7 @@
 
 (re/reg-event-db ::hash-change
   (fn [db _]
-    (let [match (reitit-frontend/hash-change (:routes (::routes db)) (reitit-frontend/get-hash))]
+    (let [match (reitit-frontend/hash-change (:router (::routes db)) (reitit-frontend/get-hash))]
       (assoc db ::routes (assoc (::routes db)
                                 :match match
                                 :controllers (if (:enable-controllers? (::routes db))
@@ -22,11 +22,11 @@
 
 ;; Options can enable-controllers right away. Should default be enabled or disabled?
 (re/reg-event-fx :routes/init
-  (fn [{:keys [db]} [_ routes options]]
+  (fn [{:keys [db]} [_ router options]]
     ;; TODO: This is tied to onhashchange
     ;; What is user wants to use HTML5 History?
     (set! js/window.onhashchange #(dispatch [::hash-change]))
-    {:db (assoc db ::routes (merge {:routes routes
+    {:db (assoc db ::routes (merge {:router router
                                     :match nil
                                     :controllers []
                                     :enable-controllers? false}
@@ -47,16 +47,16 @@
   (fn [match _]
     (:data match)))
 
-(re/reg-sub :routes/routes
+(re/reg-sub :routes/router
   :<- [::state]
   (fn [state]
-    (:routes state)))
+    (:router state)))
 
 (re/reg-sub :routes/match-by-name
-  :<- [:routes/routes]
-  (fn [routes [_ k params]]
-    (if routes
-      (reitit/match-by-name routes k params)
+  :<- [:routes/router]
+  (fn [router [_ k params]]
+    (if router
+      (reitit/match-by-name router k params)
       ::not-initialized)))
 
 (defn routed-view
