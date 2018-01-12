@@ -1,5 +1,5 @@
-(defproject metosin/reitit "0.1.0-SNAPSHOT"
-  :description "Snappy data-driven router for Clojure(Script)"
+(defproject metosin/reitit-re-frame "0.1.0-SNAPSHOT"
+  :description "Reitit: Re-frame integration"
   :url "https://github.com/metosin/reitit"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -7,8 +7,5 @@
   :parent-project {:path "../../project.clj"
                    :inherit [:deploy-repositories :managed-dependencies]}
   :dependencies [[metosin/reitit-core]
-                 [metosin/reitit-ring]
-                 [metosin/reitit-spec]
-                 [metosin/reitit-schema]
                  [metosin/reitit-frontend]
-                 [metosin/reitit-re-frame]])
+                 [re-frame]])

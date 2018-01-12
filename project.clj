@@ -14,10 +14,13 @@
                          [metosin/reitit-ring "0.1.0-SNAPSHOT"]
                          [metosin/reitit-spec "0.1.0-SNAPSHOT"]
                          [metosin/reitit-schema "0.1.0-SNAPSHOT"]
+                         [metosin/reitit-frontend "0.1.0-SNAPSHOT"]
+                         [metosin/reitit-re-frame "0.1.0-SNAPSHOT"]
 
                          [meta-merge "1.0.0"]
                          [metosin/spec-tools "0.5.1"]
-                         [metosin/schema-tools "0.10.0-SNAPSHOT"]]
+                         [metosin/schema-tools "0.10.0-SNAPSHOT"]
+                         [re-frame "0.10.2"]]
 
   :plugins [[jonase/eastwood "0.2.5"]
             [lein-doo "0.1.8"]
