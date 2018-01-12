@@ -52,7 +52,7 @@
 
 (defn apply-controllers
   "Applies changes between current controllers and
-  those previously enabled. Resets controllers which
+  those previously enabled. Resets controllers whose
   parameters have changed."
   [old-controllers new-match]
   (let [new-controllers (map (fn [controller]

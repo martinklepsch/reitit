@@ -20,15 +20,17 @@
                               :controllers (reitit-frontend/apply-controllers (:controllers (::routes db)) (:match (::routes db)))
                               :enable-controllers? true))))
 
+;; Options can enable-controllers right away. Should default be enabled or disabled?
 (re/reg-event-fx :routes/init
-  (fn [{:keys [db]} [_ routes]]
+  (fn [{:keys [db]} [_ routes options]]
     ;; TODO: This is tied to onhashchange
     ;; What is user wants to use HTML5 History?
     (set! js/window.onhashchange #(dispatch [::hash-change]))
-    {:db (assoc db ::routes {:routes routes
-                             :match nil
-                             :controllers []
-                             :enable-controllers? false})
+    {:db (assoc db ::routes (merge {:routes routes
+                                    :match nil
+                                    :controllers []
+                                    :enable-controllers? false}
+                                   options))
      :dispatch [::hash-change]}))
 
 (re/reg-sub ::state
